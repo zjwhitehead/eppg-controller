@@ -11,14 +11,14 @@
 using namespace ace_button;
 
 // Arduino Pins
-#define THROTTLE_PIN  A7 // throttle pot input
+#define THROTTLE_PIN  A1 // throttle pot input
 #define HAPTIC_PIN    3  // vibration motor - not used in V1
 #define BUZZER_PIN    5  // output for buzzer speaker
-#define LED_SW        4  // output for LED on button switch 
+#define LED_SW        13  // output for LED on button switch 
 #define ESC_PIN       10 // the ESC signal output 
-#define BATT_IN       A6 // Battery voltage in (5v max)
+#define BATT_IN       A3 // Battery voltage in (5v max)
 #define OLED_RESET    4  // ?
-#define BUTTON_PIN    7  // arm/disarm button
+#define BUTTON_PIN    12  // arm/disarm button
 #define FULL_BATT    920 // 60v/14s(max) = 1023(5v) and 50v/12s(max) = ~920
 
 Adafruit_SSD1306 display(OLED_RESET);
