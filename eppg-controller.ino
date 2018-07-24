@@ -20,6 +20,7 @@ using namespace ace_button;
 #define OLED_RESET    4  // ?
 #define BUTTON_PIN    12  // arm/disarm button
 #define FULL_BATT    920 // 60v/14s(max) = 1023(5v) and 50v/12s(max) = ~920
+#define DEBUG    true
 
 Adafruit_SSD1306 display(OLED_RESET);
 
@@ -41,9 +42,20 @@ bool displayVolts = true;
 void setup() {
   delay(500); // power-up safety delay
   Serial.begin(9600);
+  if(DEBUG){
+    while (!Serial) {
+      ; // wait for serial port to connect. Needed for native USB
+    }
+  }
+  analogReadResolution(12);
   Serial.println(F("Booting up OpenPPG"));
+  
+  analogReadResolution(12);
+  analog.setAnalogResolution(4096);
+  analogBatt.setAnalogResolution(4096);
+  
   pinMode(LED_BUILTIN, OUTPUT); //onboard LED
-  pinMode(LED_SW, OUTPUT); //setup the external LED pin
+  //pinMode(LED_SW, OUTPUT); //setup the external LED pin
   pinMode(BUTTON_PIN, INPUT);
 
   button.setButtonConfig(&adjustableButtonConfig);
@@ -54,7 +66,7 @@ void setup() {
   adjustableButtonConfig.setLongPressDelay(2500);
 
   //pinMode(HAPTIC_PIN, OUTPUT);
-  initDisplay();
+  //initDisplay();
 
   esc.attach(ESC_PIN);
   esc.writeMicroseconds(0); //make sure off
