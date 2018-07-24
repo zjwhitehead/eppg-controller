@@ -14,10 +14,9 @@ using namespace ace_button;
 #define THROTTLE_PIN  A1 // throttle pot input
 #define HAPTIC_PIN    3  // vibration motor - not used in V1
 #define BUZZER_PIN    5  // output for buzzer speaker
-#define LED_SW        13  // output for LED on button switch 
 #define ESC_PIN       10 // the ESC signal output 
 #define BATT_IN       A3 // Battery voltage in (5v max)
-#define OLED_RESET    4  // ?
+#define OLED_RESET    9  // ?
 #define BUTTON_PIN    12  // arm/disarm button
 #define FULL_BATT    920 // 60v/14s(max) = 1023(5v) and 50v/12s(max) = ~920
 #define DEBUG    true
@@ -54,8 +53,7 @@ void setup() {
   analog.setAnalogResolution(4096);
   analogBatt.setAnalogResolution(4096);
   
-  pinMode(LED_BUILTIN, OUTPUT); //onboard LED
-  //pinMode(LED_SW, OUTPUT); //setup the external LED pin
+  pinMode(LED_BUILTIN, OUTPUT); //onboard and board LED
   pinMode(BUTTON_PIN, INPUT);
 
   button.setButtonConfig(&adjustableButtonConfig);
@@ -78,7 +76,6 @@ void blinkLED() {
   int ledState = !digitalRead(LED_BUILTIN);
 
   digitalWrite(LED_BUILTIN, ledState);
-  digitalWrite(LED_SW, ledState);
 }
 
 void loop() {
@@ -161,7 +158,6 @@ void armSystem(){
 
   armed = true;
   playMelody(melody, 3);
-  digitalWrite(LED_SW, HIGH);
   digitalWrite(LED_BUILTIN, HIGH);
 }
 
@@ -187,7 +183,8 @@ void handleEvent(AceButton* button, uint8_t eventType, uint8_t buttonState) {
 
 bool throttleSafe(){
   analog.update();
-  if(analog.getValue() < 100) {
+  Serial.println(analog.getValue());
+  if(analog.getValue() < 150) {
     return true;
   }
   return false; 
