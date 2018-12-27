@@ -1,4 +1,4 @@
 # EPPG Controller
 Arduino logic for OpenPPG Throttle Controller
 
-More info coming soon
+# Moved to https://github.com/openppg/eppg-controller
